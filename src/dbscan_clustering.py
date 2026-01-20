@@ -56,14 +56,14 @@ class dbscan:
         
         indices_vizinhos = self.find_neighbors(matriz_distancias[indice_ponto])
 
-        if len(indices_vizinhos) > self.min_samples:
+        if len(indices_vizinhos) >= self.min_samples:
         
-          if rotulos[indice_ponto] == 0:
-            rotulos[indice_ponto] = cluster_atual
-            tipos[indice_ponto] = 1  # Core point
+          rotulos[indice_ponto] = cluster_atual
+          tipos[indice_ponto] = 1  # Core point
 
           rotulos, tipos = self.expand_cluster(indices_vizinhos, matriz_distancias, cluster_atual, rotulos, tipos)
          
           cluster_atual = cluster_atual + 1
 
     return rotulos, tipos
+
