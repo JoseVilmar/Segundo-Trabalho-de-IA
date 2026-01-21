@@ -3,18 +3,13 @@ from scipy.spatial import distance
 
 class dbscan:
 
-  def __init__(self, epsilon = None, min_samples = None, distance = 'euclidean', normalize = False):
+  def __init__(self, epsilon = None, min_samples = None, distance = 'euclidean'):
     self.epsilon = epsilon
     self.min_samples = min_samples
     self.distance = distance
-    self.normalize = normalize
 
   def find_distance(self, dados, type = 'euclidean'):
-
     return distance.squareform(distance.pdist(dados, type))
-
-  def normalization(self, dados):
-    return (dados - np.min(dados)) / (np.max(dados) - np.min(dados))
 
   def find_neighbors(self, distancias_ponto):
     return np.where(distancias_ponto <= self.epsilon)[0]
@@ -39,9 +34,6 @@ class dbscan:
     return rotulos, tipos
 
   def fit(self, dados):
-    
-    if self.normalize:
-      dados = self.normalization(dados)
 
     matriz_distancias = self.find_distance(dados, self.distance)
 
@@ -66,4 +58,5 @@ class dbscan:
           cluster_atual = cluster_atual + 1
 
     return rotulos, tipos
+
 
